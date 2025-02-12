@@ -2,6 +2,11 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const PORT = 3500;
+require('dotenv').config();
+
+const myVariable = process.env.MY_VARIABLE;
+console.log('MY_VARIABLE:', myVariable);
+
 
 const mineTypes = {
   '.html': 'text/html',
