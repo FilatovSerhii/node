@@ -1,31 +1,16 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const url = require('url');
+const querystring = require('querystring');
 const PORT = 3500;
+
+const users = require('./users');
+const mineTypes = require('./public/js/mineTypes');
 require('dotenv').config();
 
 const myVariable = process.env.MY_VARIABLE;
 console.log('MY_VARIABLE:', myVariable);
-
-
-const mineTypes = {
-  '.html': 'text/html',
-  '.js': 'text/javascript',
-  '.css': 'text/css',
-  '.json': 'application/json',
-  '.png': 'image/png',
-  '.jpg': 'image/jpg',
-  '.ico': 'image/x-icon',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.wav': 'audio/wav',
-  '.mp4': 'audio/mp4',
-  '.woff': 'application/font-woff',
-  '.ttf': 'application/font-ttf',
-  '.eot': 'application/vnd.ms-fontobject',
-  '.otf': 'application/font-otf',
-  '.wasm': 'application/wasm',
-};
 
 function staticFile(res, filePath, ext) {
   res.setHeader('Content-Type', mineTypes[ext]);
@@ -35,7 +20,7 @@ function staticFile(res, filePath, ext) {
     (err, data) => {
       if (err) {
         res.statusCode = 404;
-        res.end('<h1>404 Not Found</h1>');
+        res.end('<h1>404 Not Found!!</h1>');
       }
       res.end(data);
     }
@@ -50,16 +35,49 @@ http
     switch (url) {
       case '/':
         console.log('main page');
-        res.write('<h1>Main Page</h1>');
-        res.end();
+        staticFile(res, '/html/main.html', '.html');
         break;
       case '/contact':
         console.log('contact page');
-        staticFile(res, '/contact.html', '.html');
+        staticFile(res, '/html/contact.html', '.html');
+        break;
+      case '/about':
+        console.log('about page');
+        staticFile(res, '/html/about.html', '.html');
+        break;
+      case '/login':
+        console.log('login');
+        staticFile(res, '/html/login.html', '.html');
+        break;
+      case '/admin':
+        console.log('not_admin');
+        staticFile(res, '/html/not_admin.html', '.html');
+        break;
+      case '/cabinet':
+        console.log('cabinet');
+        let body = '';
+        req.on('data', (chunk) => {
+          body += chunk.toString();
+        });
+        req.on('end', () => {
+          console.log('Body:', body);
+          const parsedBody = querystring.parse(body);
+          const { login, password } = parsedBody;
+
+          const user = Object.values(users).find(
+            (user) => user.name === login && user.pass === password
+          );
+
+          if (user) {
+            res.end('User authenticated');
+          } else {
+            res.end('Invalid username or password');
+          }
+        });
         break;
       default:
         const extname = String(path.extname(url)).toLocaleLowerCase();
-        console.log('🚀 ~ .createServer ~ extName:', extname);
+        // console.log('🚀 ~ .createServer ~ extName:', extname);
 
         if (extname in mineTypes) {
           console.log(123);
