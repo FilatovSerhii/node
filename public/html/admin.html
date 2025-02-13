@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Admin Panel</h1>
+      <nav>
+        <ul>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/users">Users</a></li>
+          <li><a href="/settings">Settings</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="dashboard">
+        <h2>Dashboard</h2>
+        <p>
+          Welcome to the admin panel. Here you can manage all aspects of the
+          application.
+        </p>
+      </section>
+      <section id="users">
+        <h2>Users</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John Doe</td>
+              <td>john.doe@example.com</td>
+              <td>Admin</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jane Smith</td>
+              <td>jane.smith@example.com</td>
+              <td>User</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="settings">
+        <h2>Settings</h2>
+        <p>Configure your application settings here.</p>
+      </section>
+    </main>
+    <footer id="footer">
+      <script src="../js/footer.js"></script>
+    </footer>
+  </body>
+</html>

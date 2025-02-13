@@ -69,9 +69,9 @@ http
           );
 
           if (user) {
-            res.end('User authenticated');
+            staticFile(res, '/html/admin.html', '.html');
           } else {
-            res.end('Invalid username or password');
+            staticFile(res, '/html/un-login.html', '.html');
           }
         });
         break;
